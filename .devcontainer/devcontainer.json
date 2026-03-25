@@ -1,0 +1,21 @@
+{
+  "name": "Julia Tic-Tac-Toe",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/julialang/devcontainer-features/julia:1": {
+      "version": "latest"
+    }
+  },
+  "postCreateCommand": "cd frontend && npm install && cd ../backend && julia --project=. -e 'using Pkg; Pkg.instantiate()'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "julialang.language-julia",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  }
+}
