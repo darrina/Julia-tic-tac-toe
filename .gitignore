@@ -1,0 +1,12 @@
+# Julia
+backend/Manifest.toml
+
+# Node / Next.js (also covered by frontend/.gitignore)
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Misc
+.DS_Store
+*.pem
