@@ -1,5 +1,7 @@
 # game.jl - Core Tic-Tac-Toe game logic
 
+module Game
+
 const EMPTY = 0
 const PLAYER_X = 1
 const PLAYER_O = 2
@@ -48,3 +50,8 @@ end
 function opponent(player::Int)
     return player == PLAYER_X ? PLAYER_O : PLAYER_X
 end
+
+export EMPTY, PLAYER_X, PLAYER_O, WIN_LINES,
+       new_board, valid_moves, apply_move, check_winner, is_terminal, opponent
+
+end # module Game
