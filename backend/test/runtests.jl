@@ -1,9 +1,7 @@
 using Test
-
-# Include game logic directly (no HTTP needed for unit tests)
-include("../src/game.jl")
-using .Game: EMPTY, PLAYER_X, PLAYER_O, new_board, valid_moves, apply_move, check_winner, is_terminal, opponent
-include("../src/mcts.jl")
+using TicTacToeBackend
+using TicTacToeBackend.Game: EMPTY, PLAYER_X, PLAYER_O, new_board, valid_moves, apply_move, check_winner, is_terminal, opponent
+using TicTacToeBackend.MCTS: mcts_best_move
 
 @testset "Game Logic" begin
     @testset "new_board" begin

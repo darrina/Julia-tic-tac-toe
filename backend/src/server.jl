@@ -1,8 +1,11 @@
 # server.jl - HTTP API server
 
+module Server
+
 using HTTP
 using JSON
-using .Game: EMPTY, PLAYER_X, PLAYER_O, is_terminal, check_winner, valid_moves, apply_move
+using ..Game: EMPTY, PLAYER_X, PLAYER_O, is_terminal, check_winner, valid_moves, apply_move
+using ..MCTS: mcts_best_move
 
 const PORT = 8080
 
@@ -107,3 +110,7 @@ function run_server()
     @info "Tic-Tac-Toe Julia backend starting on port $PORT"
     HTTP.serve(router, "0.0.0.0", PORT)
 end
+
+export run_server
+
+end # module Server

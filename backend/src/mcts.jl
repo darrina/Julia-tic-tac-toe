@@ -1,6 +1,8 @@
 # mcts.jl - Monte Carlo Tree Search algorithm
 
-using .Game: EMPTY, valid_moves, apply_move, check_winner, is_terminal, opponent
+module MCTS
+
+using ..Game: EMPTY, valid_moves, apply_move, check_winner, is_terminal, opponent
 
 mutable struct MCTSNode
     board::Vector{Int}
@@ -96,3 +98,7 @@ function mcts_best_move(board::Vector{Int}, ai_player::Int;
     best = argmax(c -> c.visits, root.children)
     return best.move
 end
+
+export mcts_best_move
+
+end # module MCTS
