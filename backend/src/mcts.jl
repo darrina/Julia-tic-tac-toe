@@ -1,6 +1,6 @@
 # mcts.jl - Monte Carlo Tree Search algorithm
 
-using .Game
+using .Game: EMPTY, valid_moves, apply_move, check_winner, is_terminal, opponent
 
 mutable struct MCTSNode
     board::Vector{Int}

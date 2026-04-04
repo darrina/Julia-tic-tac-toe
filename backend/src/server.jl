@@ -2,14 +2,14 @@
 
 using HTTP
 using JSON
-using .Game
+using .Game: EMPTY, PLAYER_X, PLAYER_O, is_terminal, check_winner, valid_moves, apply_move
 
 const PORT = 8080
 
-const CORS_HEADERS = ["Content-Type" => "application/json",
-                      "Access-Control-Allow-Origin" => "*",
-                      "Access-Control-Allow-Methods" => "POST, OPTIONS",
-                      "Access-Control-Allow-Headers" => "Content-Type"]
+const RESPONSE_HEADERS = ["Content-Type" => "application/json",
+                           "Access-Control-Allow-Origin" => "*",
+                           "Access-Control-Allow-Methods" => "POST, OPTIONS",
+                           "Access-Control-Allow-Headers" => "Content-Type"]
 
 function board_from_array(raw_board)
     return [cell == "" ? EMPTY :
@@ -31,7 +31,7 @@ end
 
 function handle_ai_move(req::HTTP.Request)
     if req.method == "OPTIONS"
-        return HTTP.Response(200, CORS_HEADERS)
+        return HTTP.Response(200, RESPONSE_HEADERS)
     end
 
     try
@@ -50,7 +50,7 @@ function handle_ai_move(req::HTTP.Request)
                 "draw"   => isempty(valid_moves(board)) && check_winner(board) == EMPTY,
                 "move"   => nothing
             )
-            return HTTP.Response(200, CORS_HEADERS, body=JSON.json(resp))
+            return HTTP.Response(200, RESPONSE_HEADERS, body=JSON.json(resp))
         end
 
         move = mcts_best_move(board, ai_player; iterations=1000)
@@ -67,16 +67,16 @@ function handle_ai_move(req::HTTP.Request)
             "draw"   => draw,
             "move"   => move  # 1-indexed position (1-9)
         )
-        return HTTP.Response(200, CORS_HEADERS, body=JSON.json(resp))
+        return HTTP.Response(200, RESPONSE_HEADERS, body=JSON.json(resp))
     catch e
         @error "Error handling request" exception=e
-        return HTTP.Response(500, CORS_HEADERS, body=JSON.json(Dict("error" => string(e))))
+        return HTTP.Response(500, RESPONSE_HEADERS, body=JSON.json(Dict("error" => string(e))))
     end
 end
 
 function handle_check_state(req::HTTP.Request)
     if req.method == "OPTIONS"
-        return HTTP.Response(200, CORS_HEADERS)
+        return HTTP.Response(200, RESPONSE_HEADERS)
     end
 
     try
@@ -91,9 +91,9 @@ function handle_check_state(req::HTTP.Request)
             "draw"   => draw,
             "validMoves" => valid_moves(board)
         )
-        return HTTP.Response(200, CORS_HEADERS, body=JSON.json(resp))
+        return HTTP.Response(200, RESPONSE_HEADERS, body=JSON.json(resp))
     catch e
-        return HTTP.Response(500, CORS_HEADERS, body=JSON.json(Dict("error" => string(e))))
+        return HTTP.Response(500, RESPONSE_HEADERS, body=JSON.json(Dict("error" => string(e))))
     end
 end
 
