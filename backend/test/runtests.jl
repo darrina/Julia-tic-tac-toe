@@ -2,6 +2,7 @@ using Test
 
 # Include game logic directly (no HTTP needed for unit tests)
 include("../src/game.jl")
+using .Game
 include("../src/mcts.jl")
 
 @testset "Game Logic" begin

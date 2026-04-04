@@ -1,5 +1,7 @@
 # mcts.jl - Monte Carlo Tree Search algorithm
 
+using .Game
+
 mutable struct MCTSNode
     board::Vector{Int}
     player::Int          # player whose turn it is to move
