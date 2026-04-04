@@ -72,8 +72,8 @@ function handle_ai_move(req::HTTP.Request)
         )
         return HTTP.Response(200, RESPONSE_HEADERS, body=JSON.json(resp))
     catch e
-        @error "Error handling request" exception=e
-        return HTTP.Response(500, RESPONSE_HEADERS, body=JSON.json(Dict("error" => string(e))))
+        @error "Error handling /ai-move request" exception=(e, catch_backtrace())
+        return HTTP.Response(500, RESPONSE_HEADERS, body=JSON.json(Dict("error" => "Internal server error")))
     end
 end
 
@@ -96,7 +96,8 @@ function handle_check_state(req::HTTP.Request)
         )
         return HTTP.Response(200, RESPONSE_HEADERS, body=JSON.json(resp))
     catch e
-        return HTTP.Response(500, RESPONSE_HEADERS, body=JSON.json(Dict("error" => string(e))))
+        @error "Error handling /check-state request" exception=(e, catch_backtrace())
+        return HTTP.Response(500, RESPONSE_HEADERS, body=JSON.json(Dict("error" => "Internal server error")))
     end
 end
 
